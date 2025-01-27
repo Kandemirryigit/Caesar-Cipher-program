@@ -2,7 +2,8 @@
 from art import *  # From art.py import everything to the main.py
 import time        # To use time module firstly we should import it
 
-alphabet=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+alphabet_and_symbols=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," ","!",",","?","="]
+
 
 is_program_on=True  # To create an infinitive loop
 
@@ -15,12 +16,11 @@ while is_program_on:   # While True/False
 
 
     print(encrypt_or_decrypt_logo)
-    operation=input("To encrypt write: encrypt , To decrypt write: decrypt : ")
+    operation=input("To encrypt press: 1 , To decrypt press: 2 : ")
     print("\n"*50)
     
-    print(shift_amount_logo)
-    # %len(alphabet) a perfect trick I explained it in the readme 
-    shift_amount=int(input("How much do you want to shift? : "))%len(alphabet)   # Input's default data type is str but I need int data type because of that I added int before input
+    print(shift_amount_logo) 
+    shift_amount=int(input("How much do you want to shift? : "))  # Input's default data type is str but I need int data type because of that I added int before input
     print("\n"*50)
 
     print(text_logo)
@@ -28,33 +28,24 @@ while is_program_on:   # While True/False
     print("\n"*50)     
             
 
-
-    def encrypt():
+    
+    def operations():
+        global shift_amount    # We are inside a function and if we want to use a vaiable outside from function we should use this method
         new_text=""   # to store letters
         for letter in text:
-            new_index=alphabet.index(letter)+shift_amount
-            new_letter=alphabet[new_index]
+            shift_amount=shift_amount%len(alphabet_and_symbols)   # An important thing.I explained it inside readme
+            if operation=="1":                
+               new_index=(alphabet_and_symbols.index(letter)+shift_amount)%len(alphabet_and_symbols)    #An important thing.I explained it inside readme
+            elif operation=="2":
+                new_index=(alphabet_and_symbols.index(letter)-shift_amount)%len(alphabet_and_symbols)    #An important thing.I explained it inside readme
+            new_letter=alphabet_and_symbols[new_index]
             new_text+=new_letter
         print(result)
         print(f"New text is: {new_text}")
         input("\nPress enter to continue...")
 
+    operations()   # To run operations function
 
-    def decrypt():
-        new_text=""  # To store letters
-        for letter in text:
-            new_index=alphabet.index(letter)-shift_amount    # The only difference between encrypt and decrypt
-            new_letter=alphabet[new_index]
-            new_text+=new_letter
-        print(result)
-        print(f"New text is: {new_text}")
-        input("\nPress enter to continue...")
-
-
-    if operation=="encrypt":
-        encrypt()
-    else:
-        decrypt()
     
     print("\n"*50)
     print(want_to_restart_logo)
@@ -65,7 +56,6 @@ while is_program_on:   # While True/False
         is_program_on=False   # To stop loop
     else:
         print("\n"*50)  # To create a fresh screen
-
 
 
 
